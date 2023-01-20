@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "252486879989",
+    "project_id": "bookrentingapp",
+    "storage_bucket": "bookrentingapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252486879989:android:e328c426d3f69c7e6253bc",
+        "android_client_info": {
+          "package_name": "com.example.bookrentingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252486879989-08ih2j660ndo7tdglgbnvbo8to3l5s6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3QsLmWHhcCdn005wYO_X9AZT-G-3phUQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252486879989-08ih2j660ndo7tdglgbnvbo8to3l5s6i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
