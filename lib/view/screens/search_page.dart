@@ -59,118 +59,117 @@ class _SearchPageState extends State<SearchPage> {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: Expanded(
-                  child: StreamBuilder(
+              child: StreamBuilder(
                 stream: ref.onValue,
                 builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
-                  if (!snapshot.hasData) {
-                    loading = true;
-                    return SizedBox();
-                  } else {
-                    loading = false;
-                    Map<dynamic, dynamic> map =
-                        snapshot.data!.snapshot.value as dynamic;
+              if (!snapshot.hasData) {
+                loading = true;
+                return SizedBox();
+              } else {
+                loading = false;
+                Map<dynamic, dynamic> map =
+                    snapshot.data!.snapshot.value as dynamic;
 
-                    List<dynamic> list = [];
+                List<dynamic> list = [];
 
-                    list.clear();
+                list.clear();
 
-                    list = map.values.toList();
+                list = map.values.toList();
 
-                    return ListView.builder(
-                        physics: ScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.snapshot.children.length,
-                        itemBuilder: (context, index) {
-                          final title = list[index]['title'];
-                          if (search.text.isEmpty) {
-                            return Column(
-                              children: [
-                                InkWell(
-                                  onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) =>
-                                              ShowCompletePost(
-                                                  id: list[index]['id'])))),
-                                  child: ListTile(
-                                    title: Text(
-                                      list[index]['title'],
-                                      style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 25,
-                                        ),
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      list[index]['content']
-                                          .toString()
-                                          .characters
-                                          .take(100)
-                                          .toString(),
-                                      style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(fontSize: 15),
-                                      ),
-                                    ),
-                                    leading: Image(
-                                      image: NetworkImage(list[index]['image']),
+                return ListView.builder(
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.snapshot.children.length,
+                    itemBuilder: (context, index) {
+                      final title = list[index]['title'];
+                      if (search.text.isEmpty) {
+                        return Column(
+                          children: [
+                            InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          ShowCompletePost(
+                                              id: list[index]['id'])))),
+                              child: ListTile(
+                                title: Text(
+                                  list[index]['title'],
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 40,
+                                subtitle: Text(
+                                  list[index]['content']
+                                      .toString()
+                                      .characters
+                                      .take(100)
+                                      .toString(),
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(fontSize: 15),
+                                  ),
                                 ),
-                              ],
-                            );
-                          } else if (title.toString().toLowerCase().contains(
-                              search.text.toLowerCase().toLowerCase())) {
-                            return Column(
-                              children: [
-                                InkWell(
-                                  onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) =>
-                                              ShowCompletePost(
-                                                  id: list[index]['id'])))),
-                                  child: ListTile(
-                                    title: Text(
-                                      list[index]['title'],
-                                      style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 25,
-                                        ),
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      list[index]['content']
-                                          .toString()
-                                          .characters
-                                          .take(100)
-                                          .toString(),
-                                      style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(fontSize: 15),
-                                      ),
-                                    ),
-                                    leading: Image(
-                                      image: NetworkImage(list[index]['image']),
+                                leading: Image(
+                                  image: NetworkImage(list[index]['image']),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                          ],
+                        );
+                      } else if (title.toString().toLowerCase().contains(
+                          search.text.toLowerCase().toLowerCase())) {
+                        return Column(
+                          children: [
+                            InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          ShowCompletePost(
+                                              id: list[index]['id'])))),
+                              child: ListTile(
+                                title: Text(
+                                  list[index]['title'],
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 40,
+                                subtitle: Text(
+                                  list[index]['content']
+                                      .toString()
+                                      .characters
+                                      .take(100)
+                                      .toString(),
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(fontSize: 15),
+                                  ),
                                 ),
-                              ],
-                            );
-                          } else {
-                            return Container();
-                          }
-                        });
-                  }
+                                leading: Image(
+                                  image: NetworkImage(list[index]['image']),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Container();
+                      }
+                    });
+              }
                 },
-              )),
+              ),
             ),
           ],
         ),

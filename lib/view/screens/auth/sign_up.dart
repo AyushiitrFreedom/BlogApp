@@ -26,16 +26,31 @@ class _SignUpState extends State<SignUp> {
 
   Future<void> getGalleryImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
+    setState(() async {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        firebase_storage.Reference ref = firebase_storage
+                          .FirebaseStorage.instance
+                          .ref('/userimages' + id);
+                      firebase_storage.UploadTask uploadTask =
+                          ref.putFile(_image!.absolute);
+                      await Future.value(uploadTask);
+                      newurl = await ref.getDownloadURL();
+                      setState(() {
+                        
+                      });
+        
       } else {
         print('no image picked');
       }
+      
     });
   }
 
   bool loading = false;
+  String? newurl;
+  var id = DateTime.now().millisecondsSinceEpoch.toString();
+  String profileimg = "https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg";
   final _formKey = GlobalKey<FormState>();
   final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
@@ -77,11 +92,13 @@ class _SignUpState extends State<SignUp> {
                       ),
                       InkWell(
                         onTap: () {
+                          
                           getGalleryImage();
+                          
                         },
                         child: CircleAvatar(
                           radius: 80,
-                          backgroundImage: AssetImage("images/profile1.png"),
+                          backgroundImage: NetworkImage( newurl ?? profileimg),
                           backgroundColor: Color.fromARGB(255, 239, 237, 237),
                         ),
                       )
@@ -162,13 +179,7 @@ class _SignUpState extends State<SignUp> {
                         loading = true;
                       });
 
-                      firebase_storage.Reference ref = firebase_storage
-                          .FirebaseStorage.instance
-                          .ref('/userimages' + _emailcontroller.text);
-                      firebase_storage.UploadTask uploadTask =
-                          ref.putFile(_image!.absolute);
-                      await Future.value(uploadTask);
-                      var newurl = await ref.getDownloadURL();
+                      
 
                       _auth
                           .createUserWithEmailAndPassword(
@@ -178,7 +189,7 @@ class _SignUpState extends State<SignUp> {
                         setState(() {
                           loading = false;
                         });
-                        var id = DateTime.now().millisecondsSinceEpoch.toString();
+                        
                         databaseRef.child(id).set({
                           'id': id,
                           'email':_emailcontroller.text.toString(),
